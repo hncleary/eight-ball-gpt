@@ -1,84 +1,114 @@
 <div class="chatbot-container">
-  <div class="chat-header">
-    <div class="header-content">
-      <div class="avatar">
-        <div class="magic-8-ball">8</div>
-      </div>
-      <div class="header-text">
-        <h1>Magic 8-Ball GPT</h1>
-        <p>Ask me anything and I'll consult the mystical forces...</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="chat-messages" #messageContainer>
-    <div class="welcome-message" *ngIf="messages.length === 0">
-      <div class="welcome-content">
-        <div class="welcome-icon">🔮</div>
-        <h2>Welcome to Magic 8-Ball GPT</h2>
-        <p>Ask me any question and I'll reveal what the mystical forces have to say about your future...</p>
-        <div class="example-questions">
-          <p><strong>Try asking:</strong></p>
-          <ul>
-            <li>"Will I get the job?"</li>
-            <li>"Should I take that trip?"</li>
-            <li>"Is today a good day?"</li>
-          </ul>
+    <div class="chat-header">
+        <div class="header-content">
+            <div class="avatar">
+                <div class="magic-8-ball">8</div>
+            </div>
+            <div class="header-text">
+                <h1>Magic 8-Ball GPT</h1>
+                <p>Ask me anything and I'll consult the mystical forces...</p>
+            </div>
         </div>
-      </div>
     </div>
 
-    <div class="message" *ngFor="let message of messages" [ngClass]="{'user-message': message.isUser, 'bot-message': !message.isUser}">
-      <div class="message-content">
-        <div class="message-avatar" *ngIf="!message.isUser">
-          <div class="magic-8-ball-small">8</div>
+    <div class="chat-messages" #messageContainer>
+        <div class="welcome-message" *ngIf="messages.length === 0">
+            <div class="welcome-content">
+                <div class="welcome-icon">🔮</div>
+                <h2>Welcome to Magic 8-Ball GPT</h2>
+                <p>
+                    Ask me any question and I'll reveal what the mystical forces
+                    have to say about your future...
+                </p>
+                <div class="example-questions">
+                    <p><strong>Try asking:</strong></p>
+                    <ul>
+                        <li>"Will I get the job?"</li>
+                        <li>"Should I take that trip?"</li>
+                        <li>"Is today a good day?"</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="message-bubble">
-          <p>{{ message.text }}</p>
-          <span class="message-time">{{ message.timestamp | date:'shortTime' }}</span>
+
+        <div
+            class="message"
+            *ngFor="let message of messages"
+            [ngClass]="{
+                'user-message': message.isUser,
+                'bot-message': !message.isUser
+            }"
+        >
+            <div class="message-content">
+                <div class="message-avatar" *ngIf="!message.isUser">
+                    <div class="magic-8-ball-small">8</div>
+                </div>
+                <div class="message-bubble">
+                    <p>{{ message.text }}</p>
+                    <span class="message-time">{{
+                        message.timestamp | date : "shortTime"
+                    }}</span>
+                </div>
+                <div class="message-avatar user-avatar" *ngIf="message.isUser">
+                    <span>👤</span>
+                </div>
+            </div>
         </div>
-        <div class="message-avatar user-avatar" *ngIf="message.isUser">
-          <span>👤</span>
+
+        <div class="loading-message" *ngIf="isLoading">
+            <div class="message-content">
+                <div class="message-avatar">
+                    <div class="magic-8-ball-small">8</div>
+                </div>
+                <div class="message-bubble loading">
+                    <div class="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
-    <div class="loading-message" *ngIf="isLoading">
-      <div class="message-content">
-        <div class="message-avatar">
-          <div class="magic-8-ball-small">8</div>
+    <div class="chat-input">
+        <div class="input-container">
+            <textarea
+                [(ngModel)]="newMessage"
+                (keypress)="onKeyPress($event)"
+                placeholder="Ask the Magic 8-Ball anything..."
+                rows="1"
+                #messageInput
+                (input)="autoResize(messageInput)"
+            ></textarea>
+            <button
+                (click)="sendMessage()"
+                [disabled]="!newMessage.trim() || isLoading"
+                class="send-button"
+            >
+                <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M22 2L11 13"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M22 2L15 22L11 13L2 9L22 2Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </button>
         </div>
-        <div class="message-bubble loading">
-          <div class="typing-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-
-  <div class="chat-input">
-    <div class="input-container">
-      <textarea 
-        [(ngModel)]="newMessage" 
-        (keypress)="onKeyPress($event)"
-        placeholder="Ask the Magic 8-Ball anything..."
-        rows="1"
-        #messageInput
-        (input)="autoResize(messageInput)"
-      ></textarea>
-      <button 
-        (click)="sendMessage()" 
-        [disabled]="!newMessage.trim() || isLoading"
-        class="send-button"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
-  </div>
 </div>
