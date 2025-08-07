@@ -16,12 +16,12 @@ export interface Message {
     styleUrl: './app.component.scss'
 })
 export class AppComponent {
-    messages: Message[] = [];
-    newMessage: string = '';
-    isLoading: boolean = false;
+    protected messages: Message[] = [];
+    protected newMessage: string = '';
+    protected isLoading: boolean = false;
 
     // Magic 8-ball responses
-    private _magic8BallResponses = [
+    private readonly _magic8BallResponses = [
         'It is certain.',
         'It is decidedly so.',
         'Without a doubt.',
@@ -44,7 +44,7 @@ export class AppComponent {
         'Very doubtful.'
     ];
 
-    sendMessage() {
+    protected sendMessage() {
         if (this.newMessage.trim()) {
             // Add user message
             this.messages.push({
