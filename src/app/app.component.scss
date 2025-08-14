@@ -387,6 +387,11 @@ body {
 
 // Responsive Design
 @media (max-width: 768px) {
+    .chatbot-container {
+        height: 100vh;
+        height: 100dvh; /* Dynamic viewport height for mobile */
+    }
+
     .chat-header {
         padding: 1rem;
     }
@@ -415,6 +420,8 @@ body {
 
     .chat-messages {
         padding: 1rem;
+        flex: 1;
+        overflow-y: auto;
     }
 
     .message-content {
@@ -438,15 +445,25 @@ body {
 
     .chat-input {
         padding: 1rem;
+        position: sticky;
+        bottom: 0;
+        background: var(--card-bg);
+        z-index: 10;
     }
 
     .input-container {
-        padding: 0.5rem;
+        padding: 0.75rem;
+        margin: 0;
     }
 
     .send-button {
         width: 36px;
         height: 36px;
+    }
+
+    textarea {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        min-height: 24px !important;
     }
 }
 
