@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -20,6 +20,8 @@ export class AppComponent {
     protected newMessage: string = '';
     protected isLoading: boolean = false;
     protected showInfoModal: boolean = false;
+    protected showModelPopup: boolean = false;
+    protected selectedModel: string = '8GPT';
 
     // Magic 8-ball responses
     private readonly _magic8BallResponses = [
@@ -99,5 +101,67 @@ export class AppComponent {
         this.showInfoModal = false;
         // Restore body scroll when modal is closed
         document.body.style.overflow = 'auto';
+    }
+
+    @HostListener('document:keydown', ['$event'])
+    protected onKeyDown(event: KeyboardEvent) {
+        if (event.key === 'Escape') {
+            if (this.showInfoModal) {
+                this.closeInfoModal();
+            } else if (this.showModelPopup) {
+                this.closeModelPopup();
+            }
+        }
+    }
+
+    protected toggleModelPopup() {
+        this.showModelPopup = !this.showModelPopup;
+    }
+
+    protected closeModelPopup() {
+        this.showModelPopup = false;
+    }
+
+    protected selectModel(modelId: string) {
+        this.selectedModel = modelId;
+        this.closeModelPopup();
+        this.onModelChange();
+    }
+
+    protected onModelSelectorClick(event: Event) {
+        // If the popup is open and we clicked on the container (not the button or popup content)
+        if (this.showModelPopup && event.target === event.currentTarget) {
+            this.closeModelPopup();
+        }
+    }
+
+    protected onModelChange() {
+        // Here you would typically make an API call to switch models
+        console.log('Model changed to:', this.selectedModel);
+        // For now, we'll just log the change
+        // In a real implementation, you might want to:
+        // - Update the API endpoint
+        // - Clear the conversation
+        // - Show a notification
+    }
+
+    protected getModelDisplayName(modelId: string): string {
+        const modelNames: { [key: string]: string } = {
+            'gpt-4': 'GPT-4',
+            'gpt-3.5-turbo': 'GPT-3.5',
+            'claude-3': 'Claude 3',
+            'gemini-pro': 'Gemini'
+        };
+        return modelNames[modelId] || modelId;
+    }
+
+    protected getModelColor(modelId: string): string {
+        const modelColors: { [key: string]: string } = {
+            'gpt-4': '#10a37f', // OpenAI green
+            'gpt-3.5-turbo': '#10a37f', // OpenAI green
+            'claude-3': '#ff6b35', // Anthropic orange
+            'gemini-pro': '#4285f4' // Google blue
+        };
+        return modelColors[modelId] || '#667eea';
     }
 }

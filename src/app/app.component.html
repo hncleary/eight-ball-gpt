@@ -2,8 +2,107 @@
     <!-- Header Bar -->
     <div class="chat-header">
         <div class="header-content">
-            <div class="header-text">
-                <h1>ch8t-GPT</h1>
+            <div class="header-left">
+                <div class="header-text">
+                    <h1>ch8t-GPT</h1>
+                </div>
+                <div class="model-selector" (click)="onModelSelectorClick($event)">
+                    <button class="model-button" (click)="toggleModelPopup()">
+                        <span class="model-dot"></span>
+                        <span class="model-name">{{ getModelDisplayName(selectedModel) }}</span>
+                        <svg
+                            class="dropdown-arrow"
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M6 9L12 15L18 9"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </button>
+                    <!-- Overlay for closing popup when clicking outside -->
+                    @if(showModelPopup) {
+                    <div class="model-popup-overlay" (click)="closeModelPopup()"></div>
+                    }
+                    <div
+                        class="model-popup"
+                        [class.active]="showModelPopup"
+                        (click)="$event.stopPropagation()"
+                    >
+                        <div class="popup-header">
+                            <span>Select Model</span>
+                            <button class="close-popup" (click)="closeModelPopup()">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M18 6L6 18"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M6 6L18 18"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="popup-options">
+                            <button
+                                class="model-option"
+                                [class.selected]="selectedModel === '8GPT-mini'"
+                                (click)="selectModel('8GPT-mini')"
+                            >
+                                <span class="option-dot"></span>
+                                <span class="option-name">8GPT-mini</span>
+                                <span class="option-desc">Fast & Lightweight</span>
+                            </button>
+                            <button
+                                class="model-option"
+                                [class.selected]="selectedModel === '8GPT'"
+                                (click)="selectModel('8GPT')"
+                            >
+                                <span class="option-dot"></span>
+                                <span class="option-name">8GPT</span>
+                                <span class="option-desc">Balanced Performance</span>
+                            </button>
+                            <button
+                                class="model-option"
+                                [class.selected]="selectedModel === '8GPT-o'"
+                                (click)="selectModel('8GPT-o')"
+                            >
+                                <span class="option-dot"></span>
+                                <span class="option-name">8GPT-o</span>
+                                <span class="option-desc">Enhanced Reasoning</span>
+                            </button>
+                            <button
+                                class="model-option"
+                                [class.selected]="selectedModel === '8GPT-ultra'"
+                                (click)="selectModel('8GPT-ultra')"
+                            >
+                                <span class="option-dot"></span>
+                                <span class="option-name">8GPT-ultra</span>
+                                <span class="option-desc">Maximum Power</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <button class="info-button" (click)="openInfoModal()">
                 <svg
@@ -143,7 +242,7 @@
 <div class="modal-overlay" [class.active]="showInfoModal" (click)="closeInfoModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
         <div class="modal-header">
-            <h2>About ch8t-GPT</h2>
+            <h2>About</h2>
             <button class="close-button" (click)="closeInfoModal()">
                 <svg
                     width="20"
@@ -171,12 +270,13 @@
         </div>
         <div class="modal-body">
             <div class="info-section">
-                <h3>🎱 What is ch8t-GPT?</h3>
-                <p>
+                <h3>What is ch8t-GPT?</h3>
+                <p>The world's most powerfull LLM chat bot powered by divination</p>
+                <!-- <p>
                     ch8t-GPT is a mystical AI chatbot inspired by the classic Magic 8-Ball. Ask it
                     any question and receive mysterious, fortune-telling responses that will guide
                     you through life's uncertainties.
-                </p>
+                </p> -->
             </div>
 
             <!-- <div class="info-section">
