@@ -51,11 +51,6 @@
                     <p>{{ message.text }}</p>
                     <span class="message-time">{{ message.timestamp | date : 'shortTime' }}</span>
                 </div>
-                @if(message.isUser) {
-                <div class="message-avatar user-avatar">
-                    <span>👤</span>
-                </div>
-                }
             </div>
         </div>
         } }
@@ -68,9 +63,9 @@
                 </div>
                 <div class="message-bubble loading">
                     <div class="typing-indicator">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
                     </div>
                 </div>
             </div>
