@@ -83,6 +83,7 @@ body {
     .header-content {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: 1rem;
         max-width: 1200px;
         margin: 0 auto;
@@ -98,6 +99,154 @@ body {
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
+            }
+        }
+        
+        .info-button {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+            
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: var(--accent-color);
+                color: var(--accent-color);
+                transform: scale(1.05);
+            }
+            
+            svg {
+                transition: transform 0.2s ease;
+            }
+            
+            &:hover svg {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
+
+// Modal Styles
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow);
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    
+    .modal-overlay.active & {
+        transform: scale(1);
+    }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0;
+    }
+    
+    .close-button {
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            transform: rotate(90deg);
+        }
+    }
+}
+
+.modal-body {
+    padding: 1.5rem;
+    
+    .info-section {
+        margin-bottom: 2rem;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+        
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        
+        p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+            
+            li {
+                color: var(--text-secondary);
+                padding: 0.25rem 0;
+                position: relative;
+                padding-left: 1.5rem;
+                
+                &:before {
+                    content: "•";
+                    color: var(--accent-color);
+                    font-weight: bold;
+                    position: absolute;
+                    left: 0;
+                }
             }
         }
     }
@@ -464,6 +613,33 @@ body {
     textarea {
         font-size: 16px !important; /* Prevents zoom on iOS */
         min-height: 24px !important;
+    }
+    
+    // Modal responsive styles
+    .modal-content {
+        width: 95%;
+        max-height: 85vh;
+        margin: 1rem;
+    }
+    
+    .modal-header {
+        padding: 1rem 1rem 0.75rem;
+        
+        h2 {
+            font-size: 1.25rem;
+        }
+    }
+    
+    .modal-body {
+        padding: 1rem;
+        
+        .info-section {
+            margin-bottom: 1.5rem;
+            
+            h3 {
+                font-size: 1rem;
+            }
+        }
     }
 }
 

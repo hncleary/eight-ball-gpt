@@ -19,6 +19,7 @@ export class AppComponent {
     protected messages: Message[] = [];
     protected newMessage: string = '';
     protected isLoading: boolean = false;
+    protected showInfoModal: boolean = false;
 
     // Magic 8-ball responses
     private readonly _magic8BallResponses = [
@@ -86,5 +87,17 @@ export class AppComponent {
     protected autoResize(textarea: HTMLTextAreaElement) {
         textarea.style.height = 'auto';
         textarea.style.height = textarea.scrollHeight + 'px';
+    }
+
+    protected openInfoModal() {
+        this.showInfoModal = true;
+        // Prevent body scroll when modal is open
+        document.body.style.overflow = 'hidden';
+    }
+
+    protected closeInfoModal() {
+        this.showInfoModal = false;
+        // Restore body scroll when modal is closed
+        document.body.style.overflow = 'auto';
     }
 }

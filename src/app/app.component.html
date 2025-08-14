@@ -5,6 +5,29 @@
             <div class="header-text">
                 <h1>ch8t-GPT</h1>
             </div>
+            <button class="info-button" (click)="openInfoModal()">
+                <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                    <path
+                        d="M12 16v-4"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+                    <path
+                        d="M12 8h.01"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            </button>
         </div>
     </div>
 
@@ -112,6 +135,90 @@
                     />
                 </svg>
             </button>
+        </div>
+    </div>
+</div>
+
+<!-- Info Modal -->
+<div class="modal-overlay" [class.active]="showInfoModal" (click)="closeInfoModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h2>About ch8t-GPT</h2>
+            <button class="close-button" (click)="closeInfoModal()">
+                <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M18 6L6 18"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M6 6L18 18"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="info-section">
+                <h3>🎱 What is ch8t-GPT?</h3>
+                <p>
+                    ch8t-GPT is a mystical AI chatbot inspired by the classic Magic 8-Ball. Ask it
+                    any question and receive mysterious, fortune-telling responses that will guide
+                    you through life's uncertainties.
+                </p>
+            </div>
+
+            <!-- <div class="info-section">
+                <h3>✨ How to Use</h3>
+                <ul>
+                    <li>Type your question in the chat input below</li>
+                    <li>Press Enter or click the send button</li>
+                    <li>Wait for the mystical response from the Magic 8-Ball</li>
+                    <li>Ask follow-up questions to dive deeper into your future</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>🔮 Example Questions</h3>
+                <ul>
+                    <li>"Will I get the job I applied for?"</li>
+                    <li>"Should I take that trip next month?"</li>
+                    <li>"Is today a good day to make important decisions?"</li>
+                    <li>"What does my future hold in love?"</li>
+                    <li>"Should I trust my instincts about this situation?"</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>🌟 Features</h3>
+                <ul>
+                    <li>Mystical AI responses with a touch of magic</li>
+                    <li>Beautiful, responsive design</li>
+                    <li>Real-time chat interface</li>
+                    <li>Mobile-friendly experience</li>
+                    <li>Animated loading indicators</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>⚡ Tips</h3>
+                <p>
+                    For the best experience, ask specific questions and be open to the mystical
+                    guidance. Remember, the Magic 8-Ball speaks in mysterious ways - sometimes the
+                    answers are clearer than they first appear!
+                </p>
+            </div> -->
         </div>
     </div>
 </div>
