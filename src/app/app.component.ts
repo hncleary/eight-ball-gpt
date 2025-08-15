@@ -1,31 +1,29 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
+import { MessagesDisplayComponent, Message } from './components/messages-display/messages-display.component';
+import { ChatInputComponent } from './components/chat-input/chat-input.component';
+import { InfoModalComponent } from './components/info-modal/info-modal.component';
 import { TypingAnimationService } from './services/typing-animation.service';
 import { Subscription } from 'rxjs';
-
-export interface Message {
-    text: string;
-    isUser: boolean;
-    timestamp: Date;
-    isTyping?: boolean;
-    displayText?: string;
-}
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [
+        CommonModule,
+        HeaderComponent,
+        MessagesDisplayComponent,
+        ChatInputComponent,
+        InfoModalComponent
+    ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnDestroy {
     protected messages: Message[] = [];
-    protected newMessage: string = '';
     protected isLoading: boolean = false;
     protected showInfoModal: boolean = false;
-    protected showModelPopup: boolean = false;
-    protected selectedModel: string = '8GPT';
     private typingSubscription?: Subscription;
 
     constructor(private typingService: TypingAnimationService) {}
@@ -60,17 +58,16 @@ export class AppComponent implements OnDestroy {
         'Very doubtful.'
     ];
 
-    protected sendMessage() {
-        if (this.newMessage.trim()) {
+    protected sendMessage(messageText: string) {
+        if (messageText.trim()) {
             // Add user message
             this.messages.push({
-                text: this.newMessage,
+                text: messageText,
                 isUser: true,
                 timestamp: new Date(),
-                displayText: this.newMessage // User messages show immediately
+                displayText: messageText // User messages show immediately
             });
 
-            this.newMessage = '';
             this.isLoading = true;
 
             // Simulate AI thinking time
@@ -117,90 +114,22 @@ export class AppComponent implements OnDestroy {
         return this._magic8BallResponses[randomIndex];
     }
 
-    protected onKeyPress(event: KeyboardEvent) {
-        if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault();
-            this.sendMessage();
-        }
-    }
-
-    protected autoResize(textarea: HTMLTextAreaElement) {
-        textarea.style.height = 'auto';
-        textarea.style.height = textarea.scrollHeight + 'px';
-    }
-
     protected openInfoModal() {
         this.showInfoModal = true;
-        // Prevent body scroll when modal is open
-        document.body.style.overflow = 'hidden';
     }
 
     protected closeInfoModal() {
         this.showInfoModal = false;
-        // Restore body scroll when modal is closed
-        document.body.style.overflow = 'auto';
     }
 
-    @HostListener('document:keydown', ['$event'])
-    protected onKeyDown(event: KeyboardEvent) {
-        if (event.key === 'Escape') {
-            if (this.showInfoModal) {
-                this.closeInfoModal();
-            } else if (this.showModelPopup) {
-                this.closeModelPopup();
-            }
-        }
-    }
-
-    protected toggleModelPopup() {
-        this.showModelPopup = !this.showModelPopup;
-    }
-
-    protected closeModelPopup() {
-        this.showModelPopup = false;
-    }
-
-    protected selectModel(modelId: string) {
-        this.selectedModel = modelId;
-        this.closeModelPopup();
-        this.onModelChange();
-    }
-
-    protected onModelSelectorClick(event: Event) {
-        // If the popup is open and we clicked on the container (not the button or popup content)
-        if (this.showModelPopup && event.target === event.currentTarget) {
-            this.closeModelPopup();
-        }
-    }
-
-    protected onModelChange() {
+    protected onModelChange(modelId: string) {
         // Here you would typically make an API call to switch models
-        console.log('Model changed to:', this.selectedModel);
+        console.log('Model changed to:', modelId);
         // For now, we'll just log the change
         // In a real implementation, you might want to:
         // - Update the API endpoint
         // - Clear the conversation
         // - Show a notification
-    }
-
-    protected getModelDisplayName(modelId: string): string {
-        const modelNames: { [key: string]: string } = {
-            'gpt-4': 'GPT-4',
-            'gpt-3.5-turbo': 'GPT-3.5',
-            'claude-3': 'Claude 3',
-            'gemini-pro': 'Gemini'
-        };
-        return modelNames[modelId] || modelId;
-    }
-
-    protected getModelColor(modelId: string): string {
-        const modelColors: { [key: string]: string } = {
-            'gpt-4': '#10a37f', // OpenAI green
-            'gpt-3.5-turbo': '#10a37f', // OpenAI green
-            'claude-3': '#ff6b35', // Anthropic orange
-            'gemini-pro': '#4285f4' // Google blue
-        };
-        return modelColors[modelId] || '#667eea';
     }
 
 
