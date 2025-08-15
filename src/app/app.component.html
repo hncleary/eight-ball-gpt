@@ -2,7 +2,9 @@
     <!-- Header -->
     <app-header (modelChange)="onModelChange($event)" (infoClick)="openInfoModal()" />
     <!-- Messages -->
-    <app-messages-display [messages]="messages" [isLoading]="isLoading" />
+     <div class="messages-container">
+        <app-messages-display [messages]="messages" [isLoading]="isLoading" />
+     </div>
     <!-- Input Field -->
     <app-chat-input [isLoading]="isLoading" (sendMessage)="sendMessage($event)" />
 </div>

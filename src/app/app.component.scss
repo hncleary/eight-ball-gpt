@@ -103,9 +103,11 @@ body {
         z-index: 1;
     }
 
-    app-messages-display {
+    .messages-container {
         height: calc(100dvh - $header-height - $chat-input-height);
+        overflow-y: scroll;
     }
+
 
     app-chat-input {
         height: $chat-input-height;
