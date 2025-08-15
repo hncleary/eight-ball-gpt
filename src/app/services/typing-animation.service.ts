@@ -3,11 +3,10 @@ import { Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class TypingAnimationService {
-
-    constructor() { }
+    constructor() {}
 
     /**
      * Creates an observable that emits the text character by character

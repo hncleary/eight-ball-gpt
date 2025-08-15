@@ -1,8 +1,68 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {}
+    "folders": [
+        {
+            "name": "eight-ball-gpt",
+            "path": ".",
+        },
+    ],
+    "settings": {
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": true,
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit",
+            "source.organizeImports": "explicit",
+        },
+        "[typescript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode",
+            "editor.formatOnSave": true,
+        },
+        "[html]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode",
+            "editor.formatOnSave": true,
+        },
+        "[scss]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode",
+            "editor.formatOnSave": true,
+        },
+        "[css]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode",
+            "editor.formatOnSave": true,
+        },
+        "[json]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode",
+            "editor.formatOnSave": true,
+        },
+        "[javascript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode",
+            "editor.formatOnSave": true,
+        },
+        "typescript.preferences.importModuleSpecifier": "relative",
+        "typescript.suggest.autoImports": true,
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "files.associations": {
+            "*.html": "html",
+        },
+        "emmet.includeLanguages": {
+            "typescript": "html",
+        },
+        "emmet.triggerExpansionOnTab": true,
+        "prettier.requireConfig": true,
+        "prettier.useEditorConfig": false,
+    },
+    "extensions": {
+        "recommendations": [
+            "esbenp.prettier-vscode",
+            "angular.ng-template",
+            "ms-vscode.vscode-typescript-next",
+            "bradlc.vscode-tailwindcss",
+            "formulahendry.auto-rename-tag",
+            "christian-kohler.path-intellisense",
+            "ms-vscode.vscode-json",
+            "redhat.vscode-yaml",
+            "ms-vscode.vscode-css-peek",
+            "ms-vscode.vscode-html-css-support",
+        ],
+    },
 }

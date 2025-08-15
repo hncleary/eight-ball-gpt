@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
     standalone: true,
     imports: [CommonModule, FormsModule],
     templateUrl: './chat-input.component.html',
-    styleUrl: './chat-input.component.scss'
+    styleUrl: './chat-input.component.scss',
 })
 export class ChatInputComponent {
     @Output() sendMessage = new EventEmitter<string>();

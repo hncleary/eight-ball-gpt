@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     imports: [CommonModule],
     templateUrl: './header.component.html',
-    styleUrl: './header.component.scss'
+    styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
     @Output() modelChange = new EventEmitter<string>();
@@ -44,7 +44,7 @@ export class HeaderComponent {
             '8GPT-mini': '8GPT-mini',
             '8GPT': '8GPT',
             '8GPT-o': '8GPT-o',
-            '8GPT-ultra': '8GPT-ultra'
+            '8GPT-ultra': '8GPT-ultra',
         };
         return modelNames[modelId] || modelId;
     }

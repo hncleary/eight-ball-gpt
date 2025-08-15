@@ -1,69 +1,67 @@
 <div class="chat-messages">
     <!-- Welcome Message (No Messages Sent) -->
-    @if(messages.length === 0) {
-    <div class="welcome-message">
-        <div class="welcome-content">
-            <div class="welcome-icon">
-                <img src="8_ball_logo.png" />
-            </div>
-            <h2>Welcome to ch8t-GPT</h2>
-            <p>
-                Ask me any question and I'll reveal what the mystical forces have to say about your
-                future...
-            </p>
-            <div class="example-questions">
-                <p><strong>Try asking:</strong></p>
-                <ul>
-                    <li>"Will I get the job?"</li>
-                    <li>"Should I take that trip?"</li>
-                    <li>"Is today a good day?"</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    } @else {
-    <!-- Messages Container -->
-    @for(message of messages; track $index) {
-    <div
-        class="message"
-        [ngClass]="{
-            'user-message': message.isUser,
-            'bot-message': !message.isUser
-        }"
-    >
-        <div class="message-content">
-            @if(!message.isUser) {
-            <div class="message-avatar">
-                <div class="magic-8-ball-small">8</div>
-            </div>
-            }
-            <div class="message-bubble">
-                <p>
-                    {{ message.displayText }}
-                    @if(!message.isUser && message.isTyping) {
-                    <span class="typing-cursor">|</span>
-                    }
-                </p>
-                <span class="message-time">{{ message.timestamp | date : 'shortTime' }}</span>
-            </div>
-        </div>
-    </div>
-    } }
-    <!-- Loading Container -->
-    @if(isLoading) {
-    <div class="loading-message">
-        <div class="message-content">
-            <div class="message-avatar">
-                <div class="magic-8-ball-small">8</div>
-            </div>
-            <div class="message-bubble loading">
-                <div class="typing-indicator">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
+    @if (messages.length === 0) {
+        <div class="welcome-message">
+            <div class="welcome-content">
+                <div class="welcome-icon">
+                    <img src="8_ball_logo.png" />
+                </div>
+                <h3>Welcome to ch8t-GPT</h3>
+                <p>Ask me any question and I'll reveal what the mystical forces have to say about your future...</p>
+                <div class="example-questions">
+                    <p><strong>Try asking:</strong></p>
+                    <ul>
+                        <li>"Will I get the job?"</li>
+                        <li>"Should I take that trip?"</li>
+                        <li>"Is today a good day?"</li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
+    } @else {
+        <!-- Messages Container -->
+        @for (message of messages; track $index) {
+            <div
+                class="message"
+                [ngClass]="{
+                    'user-message': message.isUser,
+                    'bot-message': !message.isUser,
+                }"
+            >
+                <div class="message-content">
+                    @if (!message.isUser) {
+                        <div class="message-avatar">
+                            <div class="magic-8-ball-small">8</div>
+                        </div>
+                    }
+                    <div class="message-bubble">
+                        <p>
+                            {{ message.displayText }}
+                            @if (!message.isUser && message.isTyping) {
+                                <span class="typing-cursor">|</span>
+                            }
+                        </p>
+                        <span class="message-time">{{ message.timestamp | date: "shortTime" }}</span>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    <!-- Loading Container -->
+    @if (isLoading) {
+        <div class="loading-message">
+            <div class="message-content">
+                <div class="message-avatar">
+                    <div class="magic-8-ball-small">8</div>
+                </div>
+                <div class="message-bubble loading">
+                    <div class="typing-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 </div>

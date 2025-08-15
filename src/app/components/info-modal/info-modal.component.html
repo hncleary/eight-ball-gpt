@@ -3,13 +3,7 @@
         <div class="modal-header">
             <h2>About</h2>
             <button class="close-button" (click)="closeModal()">
-                <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M18 6L6 18"
                         stroke="currentColor"
@@ -30,7 +24,17 @@
         <div class="modal-body">
             <div class="info-section">
                 <h3>What is ch8t-GPT?</h3>
-                <p>The world's most powerfull LLM chat bot powered by divination</p>
+                <p>The world's most powerful LLM chat bot powered by divination.</p>
+                <p>Developed by <a target="_blank" href="https://twitter.com/Cyranek">&#64;Cyranek</a></p>
+                <div class="row">
+                    <div class="version-display">
+                        <p>v{{ version }}</p>
+                    </div>
+                    <div class="view-count">
+                        <img src="https://www.counter12.com/img-da4c99x6w7aCa843-50.gif" />
+                        views
+                    </div>
+                </div>
             </div>
         </div>
     </div>

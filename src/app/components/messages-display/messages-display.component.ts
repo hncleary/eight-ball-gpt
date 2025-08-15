@@ -14,7 +14,7 @@ export interface Message {
     standalone: true,
     imports: [CommonModule],
     templateUrl: './messages-display.component.html',
-    styleUrl: './messages-display.component.scss'
+    styleUrl: './messages-display.component.scss',
 })
 export class MessagesDisplayComponent {
     @Input() messages: Message[] = [];

@@ -1,7 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
-import { MessagesDisplayComponent, Message } from './components/messages-display/messages-display.component';
+import {
+    MessagesDisplayComponent,
+    Message,
+} from './components/messages-display/messages-display.component';
 import { ChatInputComponent } from './components/chat-input/chat-input.component';
 import { InfoModalComponent } from './components/info-modal/info-modal.component';
 import { TypingAnimationService } from './services/typing-animation.service';
@@ -15,10 +18,10 @@ import { Subscription } from 'rxjs';
         HeaderComponent,
         MessagesDisplayComponent,
         ChatInputComponent,
-        InfoModalComponent
+        InfoModalComponent,
     ],
     templateUrl: './app.component.html',
-    styleUrl: './app.component.scss'
+    styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnDestroy {
     protected messages: Message[] = [];
@@ -51,11 +54,11 @@ export class AppComponent implements OnDestroy {
         'Better not tell you now.',
         'Cannot predict now.',
         'Concentrate and ask again.',
-        'Don\'t count on it.',
+        "Don't count on it.",
         'My reply is no.',
         'My sources say no.',
         'Outlook not so good.',
-        'Very doubtful.'
+        'Very doubtful.',
     ];
 
     protected sendMessage(messageText: string) {
@@ -65,28 +68,31 @@ export class AppComponent implements OnDestroy {
                 text: messageText,
                 isUser: true,
                 timestamp: new Date(),
-                displayText: messageText // User messages show immediately
+                displayText: messageText, // User messages show immediately
             });
 
             this.isLoading = true;
 
             // Simulate AI thinking time
-            setTimeout(() => {
-                const response = this.getMagic8BallResponse();
-                const botMessage: Message = {
-                    text: response,
-                    isUser: false,
-                    timestamp: new Date(),
-                    isTyping: true,
-                    displayText: ''
-                };
+            setTimeout(
+                () => {
+                    const response = this.getMagic8BallResponse();
+                    const botMessage: Message = {
+                        text: response,
+                        isUser: false,
+                        timestamp: new Date(),
+                        isTyping: true,
+                        displayText: '',
+                    };
 
-                this.messages.push(botMessage);
-                this.isLoading = false;
+                    this.messages.push(botMessage);
+                    this.isLoading = false;
 
-                // Start typing animation
-                this.startTypingAnimation(botMessage);
-            }, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
+                    // Start typing animation
+                    this.startTypingAnimation(botMessage);
+                },
+                1000 + Math.random() * 2000
+            ); // Random delay between 1-3 seconds
         }
     }
 
@@ -97,20 +103,18 @@ export class AppComponent implements OnDestroy {
         }
 
         // Start the typing animation with variable speed
-        this.typingSubscription = this.typingService.typeTextWithVariableSpeed(message.text, 60).subscribe(
-            (displayText) => {
+        this.typingSubscription = this.typingService
+            .typeTextWithVariableSpeed(message.text, 60)
+            .subscribe(displayText => {
                 message.displayText = displayText;
                 if (displayText === message.text) {
                     message.isTyping = false;
                 }
-            }
-        );
+            });
     }
 
     private getMagic8BallResponse(): string {
-        const randomIndex = Math.floor(
-            Math.random() * this._magic8BallResponses.length
-        );
+        const randomIndex = Math.floor(Math.random() * this._magic8BallResponses.length);
         return this._magic8BallResponses[randomIndex];
     }
 
@@ -131,6 +135,4 @@ export class AppComponent implements OnDestroy {
         // - Clear the conversation
         // - Show a notification
     }
-
-
 }
