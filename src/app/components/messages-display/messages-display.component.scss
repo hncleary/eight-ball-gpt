@@ -51,10 +51,15 @@
     .welcome-icon {
         font-size: 3rem;
         animation: float 3s ease-in-out infinite;
+        padding: 1rem;
         img {
             height: 60px;
             width: 60px;
-            box-shadow: var(--shadow);
+            box-shadow:
+                var(--shadow),
+                0 0 20px rgba(255, 255, 255, 0.3),
+                0 0 40px rgba(255, 255, 255, 0.1);
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
         }
     }
 }
