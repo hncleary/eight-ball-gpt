@@ -55,10 +55,7 @@
         img {
             height: 60px;
             width: 60px;
-            box-shadow:
-                var(--shadow),
-                0 0 20px rgba(255, 255, 255, 0.3),
-                0 0 40px rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
         }
     }
