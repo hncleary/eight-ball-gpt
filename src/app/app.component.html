@@ -170,7 +170,12 @@
                 </div>
                 }
                 <div class="message-bubble">
-                    <p>{{ message.text }}</p>
+                    <p>
+                        {{ message.displayText }}
+                        @if(!message.isUser && message.isTyping) {
+                        <span class="typing-cursor">|</span>
+                        }
+                    </p>
                     <span class="message-time">{{ message.timestamp | date : 'shortTime' }}</span>
                 </div>
             </div>

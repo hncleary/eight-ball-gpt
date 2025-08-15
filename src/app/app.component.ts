@@ -1,11 +1,15 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TypingAnimationService } from './services/typing-animation.service';
+import { Subscription } from 'rxjs';
 
 export interface Message {
     text: string;
     isUser: boolean;
     timestamp: Date;
+    isTyping?: boolean;
+    displayText?: string;
 }
 
 @Component({
@@ -15,13 +19,22 @@ export interface Message {
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
     protected messages: Message[] = [];
     protected newMessage: string = '';
     protected isLoading: boolean = false;
     protected showInfoModal: boolean = false;
     protected showModelPopup: boolean = false;
     protected selectedModel: string = '8GPT';
+    private typingSubscription?: Subscription;
+
+    constructor(private typingService: TypingAnimationService) {}
+
+    ngOnDestroy() {
+        if (this.typingSubscription) {
+            this.typingSubscription.unsubscribe();
+        }
+    }
 
     // Magic 8-ball responses
     private readonly _magic8BallResponses = [
@@ -53,7 +66,8 @@ export class AppComponent {
             this.messages.push({
                 text: this.newMessage,
                 isUser: true,
-                timestamp: new Date()
+                timestamp: new Date(),
+                displayText: this.newMessage // User messages show immediately
             });
 
             this.newMessage = '';
@@ -62,14 +76,38 @@ export class AppComponent {
             // Simulate AI thinking time
             setTimeout(() => {
                 const response = this.getMagic8BallResponse();
-                this.messages.push({
+                const botMessage: Message = {
                     text: response,
                     isUser: false,
-                    timestamp: new Date()
-                });
+                    timestamp: new Date(),
+                    isTyping: true,
+                    displayText: ''
+                };
+
+                this.messages.push(botMessage);
                 this.isLoading = false;
+
+                // Start typing animation
+                this.startTypingAnimation(botMessage);
             }, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
         }
+    }
+
+    private startTypingAnimation(message: Message) {
+        // Clean up any existing subscription
+        if (this.typingSubscription) {
+            this.typingSubscription.unsubscribe();
+        }
+
+        // Start the typing animation with variable speed
+        this.typingSubscription = this.typingService.typeTextWithVariableSpeed(message.text, 60).subscribe(
+            (displayText) => {
+                message.displayText = displayText;
+                if (displayText === message.text) {
+                    message.isTyping = false;
+                }
+            }
+        );
     }
 
     private getMagic8BallResponse(): string {
@@ -164,4 +202,6 @@ export class AppComponent {
         };
         return modelColors[modelId] || '#667eea';
     }
+
+
 }
